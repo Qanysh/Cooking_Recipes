@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Cooking Recipes</title>
+    <%- include('components/imports.ejs') %>
+</head>
+<body>
+    <%- include('components/header.ejs', {search: true}) %>
+
+    <div class="px-3">
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-12 col-md-9">
+                    <input type="text" name="query" placeholder="Enter the meal!" value="<%= meal.name %>" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary col-12 col-md-3 ">Search</button>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+
+    <% if (meal) { %>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <img src="<%= meal.image %>" alt="Meal Image" class="img-fluid rounded">
+                </div>
+                <div class="col-lg-6">
+                    <h2><%= meal.name %></h2>
+                    <p><strong>Country:</strong> <%= meal.country %></p>
+                    <p><%= meal.description %></p>
+                    <% if (meal.link) { %>
+                        <a href="<%= meal.link %>" target="_blank" class="btn btn-info">Watch on YouTube</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    <% } else { %>
+        <div class="alert alert-info">Enter a meal name to search for recipes.</div>
+    <% } %>
+
+    <br>
+    <br>
+
+    <%- include('components/footer.ejs') %>
+    
+</body>
+</html>

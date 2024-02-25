@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cooking Recipes</title>
+    <%- include('../components/imports.ejs') %>
+</head>
+<body>
+    <%- include('../components/header.ejs') %>
+
+    <div class="container">
+        <div class="fs-2 fw-semibold mb-4">Admin Panel</div>
+        <button class="btn btn-primary px-3" data-bs-toggle="modal" data-bs-target="#addRecipeModal">Add new recipe</button>
+    </div>
+
+    <div class="modal fade" id="addRecipeModal" tabindex="-1" role="dialog" aria-labelledby="addRecipeModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addRecipeModalLabel">Add New Recipe</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method="POST" action="/admin/recipes/add">
+                <div class="form-group">
+                  <label for="title">Title (EN)</label>
+                  <input type="text" class="form-control" name="title" required>
+                </div>
+                <div class="form-group">
+                  <label for="title_ru">Title (RU)</label>
+                  <input type="text" class="form-control" name="title_ru" required>
+                </div>
+                <div class="form-group">
+                  <label for="text">Description (EN)</label>
+                  <textarea class="form-control" name="text" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="text_ru">Description (RU)</label>
+                  <textarea class="form-control" name="text_ru" required></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="time">Preparation Time (minutes)</label>
+                  <input type="number" class="form-control" name="time" required>
+                </div>
+                <div class="form-group">
+                  <label for="image1">Image URL 1</label>
+                  <input type="text" class="form-control" name="images[]" required>
+                </div>
+                <div class="form-group">
+                  <label for="image2">Image URL 2</label>
+                  <input type="text" class="form-control" name="images[]" required>
+                </div>
+                <div class="form-group">
+                  <label for="image3">Image URL 3</label>
+                  <input type="text" class="form-control" name="images[]" required>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Add Recipe</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    
+
+    <div class="container mt-3">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Title (EN)</th>
+              <th scope="col">Description (EN)</th>
+              <th scope="col">Title (RU)</th>
+              <th scope="col">Description (RU)</th>
+              <th scope="col">Preparation Time</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Updated At</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% allRecipes.forEach(function(recipe) { %>
+              <tr>
+                <td><%= recipe.title %></td>
+                <td><%= recipe.text %></td>
+                <td><%= recipe.title_ru %></td>
+                <td><%= recipe.text_ru %></td>
+                <td><%= recipe.time %> mins</td>
+                <td><%= recipe.created_at.toLocaleString() %></td>
+                <td><%= recipe.updated_at.toLocaleString() %></td>
+                <td>
+                  <!-- Edit Button -->
+                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editRecipeModal<%= recipe._id %>">
+                    Edit
+                  </button>
+      
+                  <!-- Delete Button -->
+                  <button type="button" class="btn btn-danger btn-sm" onclick="deleteRecipe('<%= recipe._id %>')">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+              <div class="modal fade" id="editRecipeModal<%= recipe._id %>" tabindex="-1" aria-labelledby="editRecipeModalLabel<%= recipe._id %>" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="editRecipeModalLabel<%= recipe._id %>">Edit Recipe</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form method="POST" action="/admin/recipes/update">
+                        <input type="text" hidden name="recipeId" value="<%= recipe._id %>">
+                        <div class="form-group">
+                          <label for="title<%= recipe._id %>">Title (EN)</label>
+                          <input type="text" class="form-control" name="title" id="title<%= recipe._id %>" value="<%= recipe.title %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="title_ru<%= recipe._id %>">Title (RU)</label>
+                          <input type="text" class="form-control" name="title_ru" id="title_ru<%= recipe._id %>" value="<%= recipe.title_ru %>" required>
+                        </div>
+                        <div class="form-group">
+                          <label for="text<%= recipe._id %>">Description (EN)</label>
+                          <textarea class="form-control" name="text" id="text<%= recipe._id %>" required><%= recipe.text %></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="text_ru<%= recipe._id %>">Description (RU)</label>
+                          <textarea class="form-control" name="text_ru" id="text_ru<%= recipe._id %>" required><%= recipe.text_ru %></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="time<%= recipe._id %>">Preparation Time (minutes)</label>
+                          <input type="number" class="form-control" name="time" id="time<%= recipe._id %>" value="<%= recipe.time %>" required>
+                        </div>
+                        <% for(let i = 0; i < 3; i++) { %>
+                          <div class="form-group">
+                            <label for="image<%= i %><%= recipe._id %>">Image URL <%= i + 1 %></label>
+                            <input type="text" class="form-control" name="images[]" id="image<%= i %><%= recipe._id %>" value="<%= recipe.images[i] || '' %>" required>
+                          </div>
+                        <% } %>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }); %>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Modals and JavaScript for editing and deletion would go here... -->
+      
+      <script>
+        function deleteRecipe(recipeId) {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = `/admin/recipes/delete/${recipeId}`;
+            }
+          })
+        }
+      </script>
+      
+
+    <%- include('../components/footer.ejs') %>
+    
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div class="container">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="/logo.png" class="img-fluid" style="height: 60px;" alt="logo">&nbsp;&nbsp;
+            <h4 class="p-0 m-0">Cooking Recipes</h4>
+        </a>
+    
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="/recipes" class="nav-link px-2 link-secondary">Recipes</a></li>
+            <li><a href="/bonus" class="nav-link px-2 link-secondary">Bonus</a></li>
+        </ul>
+    
+        <div class="col-md-2 text-end">
+            <form method="GET" action="/search">
+                <input type="search" name="query" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+        </div>
+        <div class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <% if (user) { %> 
+                <% if (user.admin) { %>
+                    <li><a href="/admin" class="nav-link px-2 link-secondary">Admin</a></li>
+                <% } %>
+                <li><a href="/logout" class="nav-link px-2 link-secondary">Logout</a></li>
+            <% } else { %>
+                <li><a href="/login" class="nav-link px-2 link-secondary">Login</a></li>
+                <li><a href="/signup" class="nav-link px-2 link-secondary">Sign Up</a></li>
+            <% } %>
+        </div>
+    </header>
+</div>

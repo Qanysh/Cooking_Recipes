@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cooking Recipes</title>
+    <%- include('../components/imports.ejs') %>
+</head>
+<body>
+    <%- include('../components/header.ejs') %>
+
+    <div class="container">
+        <div class="fs-2 fw-semibold mb-4">Admin Panel</div>
+    </div>
+
+    <div class="container mt-3">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Username</th>
+              <th scope="col">Created At</th>
+              <th scope="col">Actions</th>
+              <th scope="col">Note</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% allUsers.forEach(function(us) { %>
+              <tr>
+                <td><%= us.username %></td>
+                <td><%= us.created_at.toLocaleString() %></td>
+                <td>
+                  <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editUserModal<%= us.id %>">
+                    Edit
+                  </button>
+      
+                  <div class="modal fade" id="editUserModal<%= us.id %>" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="editUserModalLabel">Edit Username</h5>
+                          
+                        </div>
+                        <div class="modal-body">
+                          <form method="POST" action="/admin/users/edit">
+                            <div class="form-group">
+                              <input hidden name="userId" value="<%= us.id %>">
+                              <label for="username">Username</label>
+                              <input type="text" class="form-control" name="us_username" value="<%= us.username %>">
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <button type="button" class="btn btn-danger btn-sm" onclick="deleteUser('<%= us.id %>')">
+                    Delete
+                  </button>
+                </td>
+                <td>
+                    <% if (us.admin) { %>
+                        <span class="badge bg-success">Admin</span>
+                    <% } %>
+                </td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    
+      <script>
+        function deleteUser(userId) {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = `/admin/users/delete/${userId}`;
+            }
+          })
+        }
+      </script>
+      
+
+    <%- include('../components/footer.ejs') %>
+    
+</body>
+</html>

@@ -1,0 +1,47 @@
+<div class="col">
+    <div class="card mb-4 shadow-sm rounded-4">
+        <div id="recipeCarousel<%= recipe._id %>" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <% recipe.images.forEach((image, index) => { %>
+                    <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+                        <img src="<%= image %>" class="d-block w-100 img-fluid object-fit-cover rounded-4" style="height: 200px;" alt="...">
+                    </div>
+                <% }); %>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel<%= recipe._id %>" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel<%= recipe._id %>" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" id="title<%= recipe._id %>"><%= recipe.title %></h5>
+            <p class="card-text" id="text<%= recipe._id %>"><%= recipe.text %></p>
+            <div class="d-flex justify-content-between align-items-center">
+                <small id="time<%= recipe._id %>" class="text-muted col-9 mb-0">Время приготовления: <%= recipe.time %> мин</small>
+                
+                <select class="form-select form-select-sm col-3" style="max-width: 100px;" onchange="changeLanguage(this, '<%= recipe._id %>')">
+                    <option value="en">EN</option>
+                    <option value="ru">RU</option>
+                </select>
+                <script>
+                    
+                    function changeLanguage(selector, id) {
+                        let language = selector.value;
+                        let titleElement = document.getElementById('title' + id);
+                        let textElement = document.getElementById('text' + id);
+                        let timeElement = document.getElementById('time' + id);
+                        
+                        titleElement.innerText = language === 'en' ? '<%= recipe.title %>' : '<%= recipe.title_ru %>';
+                        textElement.innerText = language === 'en' ? '<%= recipe.text %>' : '<%= recipe.text_ru %>';
+                        timeElement.innerText = language === 'en' ? 'Cooking time: <%= recipe.time %> min' : 'Время приготовления: <%= recipe.time %> мин';
+
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>

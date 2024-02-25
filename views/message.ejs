@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Cooking Recipes</title>
+    <%- include('components/imports.ejs') %>
+</head>
+<body>
+    <%- include('components/header.ejs', {search: true}) %>
+
+    <div class="container">
+        <%= message %>
+        <br>
+        <br>
+        <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20awesome%20quiz!%20<%= encodeURIComponent(message) %>" target="_blank" class="btn btn-info mr-2">Share on Twitter</a>
+            <a href="https://telegram.me/share/url?url=www.google.kz&text=Check%20out%20this%20awesome%20quiz!%20<%= encodeURIComponent(message) %>" target="_blank" class="btn btn-primary mr-2">Share on Telegram</a>
+            <a href="https://api.whatsapp.com/send?text=Check%20out%20this%20awesome%20quiz!%20<%= encodeURIComponent(message) %>" target="_blank" class="btn btn-success">Share on WhatsApp</a>
+        </div>
+        <br>
+        <br>
+    </div>
+
+    <script>
+        
+    </script>
+    <%- include('components/footer.ejs') %>
+    
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cooking Recipes</title>
+    <%- include('../components/imports.ejs') %>
+</head>
+
+<body>
+    <%- include('../components/header.ejs') %>
+
+        <div class="container">
+            <div class="fs-2 fw-semibold">Admin Panel</div>
+        </div>
+
+        <div class="container my-4">
+            <div class="list-group">
+                <a href="/admin/users" class="list-group-item list-group-item-action">Users</a>
+                <a href="/admin/recipes" class="list-group-item list-group-item-action">Recipes</a>
+            </div>
+        </div>
+
+        <%- include('../components/footer.ejs') %>
+
+</body>
+
+</html>

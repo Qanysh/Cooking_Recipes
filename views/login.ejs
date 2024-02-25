@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cooking Recipes</title>
+    <%- include('components/imports.ejs') %>
+</head>
+<body>
+    <%- include('components/header.ejs') %>
+
+    <div class="container my-5">
+        <div class="row align-items-center px-5">
+            <div class="col-md-6">
+                <!-- Login Form -->
+                <form method="POST" action="/login">
+                    <div class="fs-3 fw-semibold mb-3">Login to Your Account</div>
+                    <% if (error) {%>
+                        <span class="badge text-bg-danger mb-3 fs-5"><%= error %></span>
+                    <% } %>
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" placeholder="Enter username">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password" placeholder="Enter password">
+                        </div>
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                        <div class="mb-3">
+                            Still not registered? <a href="/signup" class="link-primary text-decoration-none">Sign up now!</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <img src="https://img.freepik.com/premium-photo/photo-closeup-shot-delicious-food_829042-89.jpg" alt="Delicious Food" class="img-fluid rounded-4">
+            </div>
+        </div>
+    </div>
+
+    <%- include('components/footer.ejs') %>
+    
+</body>
+</html>

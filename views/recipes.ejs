@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Cooking Recipes</title>
+    <%- include('components/imports.ejs') %>
+</head>
+<body>
+    <%- include('components/header.ejs') %>
+
+    <div class="container mt-4">
+        <h2 class="fs-3 fw-bold">Random Meals</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <% meals.forEach(meal => { %>
+                <div class="col">
+                    <div class="card mb-4">
+                        <img src="<%= meal.image %>" class="card-img-top" alt="<%= meal.name %>">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= meal.name %> (<%= meal.country %>)</h5>
+                            <p class="card-text"><% if (meal.description.length > 60) { %>
+                                <%= meal.description.substring(0, 60) %>...
+                            <% } else { %>
+                                <%= meal.description %>
+                            <% } %></p>
+                            <% if(meal.link) { %>
+                                <a href="<%= meal.link %>" class="btn btn-primary" target="_blank">Watch on YouTube</a>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    
+        <h2 class="fs-3 fw-bold">Random Cocktails</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <% cocktails.forEach(cocktail => { %>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= cocktail.name %></h5>
+                            <h6 class="card-subtitle mb-2 text-muted">Ingredients:</h6>
+                            <ul>
+                                <% cocktail.ingredients.forEach(ingredient => { %>
+                                    <li><%= ingredient %></li>
+                                <% }); %>
+                            </ul>
+                            <p class="card-text"><%= cocktail.instructions %></p>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    
+
+
+    <%- include('components/footer.ejs') %>
+</body>
+</html>
